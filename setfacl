@@ -1,0 +1,27 @@
+--https://serverfault.com/questions/258827/what-is-the-most-secure-way-to-allow-a-user-read-access-to-a-log-file
+
+Just to expand a little on the above answers here is a real world use case. I run the enterprise log analysis application Splunk on a Redhat box. It runs under the splunk user and splunk group. This prevents splunk accessing the logs in /var/log as they are only accessible by root (or a sudo admin)
+
+In order to allow read only access for splunk only I've used some ACL's and modified logrotate to persist it.
+
+You can manually set the ACL with
+
+sudo setfacl -m g:splunk:rx /var/log/messages
+This will not persist as logrotate will not re-apply the ACL setting so for a more permanent solution I added a rule to logrotate to reset the ACL. I added the file..
+
+/etc/logrotate.d/Splunk_ACLs
+with
+
+{
+    postrotate
+        /usr/bin/setfacl -m g:splunk:rx /var/log/cron
+        /usr/bin/setfacl -m g:splunk:rx /var/log/maillog
+        /usr/bin/setfacl -m g:splunk:rx /var/log/messages
+        /usr/bin/setfacl -m g:splunk:rx /var/log/secure
+        /usr/bin/setfacl -m g:splunk:rx /var/log/spooler
+    endscript
+}
+Check the ACL status of a file with
+
+$ getfacl /var/log/messages
+For more info on ACL's see https://help.ubuntu.com/community/FilePermissionsACLs http://bencane.com/2012/05/27/acl-using-access-control-lists-on-linux/
