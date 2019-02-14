@@ -1,0 +1,6 @@
+--copy file to all servers  
+pscp.pssh -h ~/pssh_hosts -l root -v trunc_log.sql /root/scripts
+
+--run command parallel
+pssh -h pssh_hosts -l root  -i "systemctl -all | grep ppas"
+
