@@ -4,3 +4,10 @@ pscp.pssh -h ~/pssh_hosts -l root -v trunc_log.sql /root/scripts
 --run command parallel
 pssh -h pssh_hosts -l root  -i "systemctl -all | grep ppas"
 
+--alias
+alias dcli='pssh -h ~/pssh_hosts -l root -i'
+alias dcp='pscp.pssh -h ~/pssh_hosts -l root -v'
+
+--run psql parallel
+dcli "export PGPASSWORD=xdb_replication; /u01/PostgresPlus/9.5AS/bin/psql -U xdb_replication -d aioc -tAc \"select count(*) from  aioc.sc_userlog\""
+
