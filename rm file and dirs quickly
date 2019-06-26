@@ -1,0 +1,4 @@
+
+https://www.anbob.com/archives/4268.html
+
+ perl -e 'for(<*>){((stat)[9]<(unlink))}'
