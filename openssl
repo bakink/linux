@@ -1,0 +1,2 @@
+--get SSL certificate.
+openssl s_client -servername downloads.mongodb.com -connect downloads.mongodb.com:443 -showcerts
