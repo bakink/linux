@@ -1,2 +1,4 @@
 --get SSL certificate. --get from level 1 
 openssl s_client -servername downloads.mongodb.com -connect downloads.mongodb.com:443 -showcerts
+
+openssl s_client -connect http://office.com -servername http://office.com </dev/null 2>/dev/null |openssl x509 -noout --checkend 86400 # Check if the SSL certificate for a website is going to expire in less than a day.
