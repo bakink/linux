@@ -1,0 +1,9 @@
+--OS Watcher User’s Guide (Doc ID 1531223.1)
+--OSWatcher Analyzer User Guide (Doc ID 461053.1)
+
+nohup sh startOSWbb.sh 30 720 &  # 30 sec + 30 day keep
+
+--The OSWatcher Analyser
+--https://martincarstenbach.wordpress.com/2016/06/14/using-oswatcher-for-system-diagnostics/
+java -jar oswbba.jar -i archive -b "Dec 16 10:25:00 2015"  -e "Dec 16 10:35:00 2015" -P swingbench -s
+
