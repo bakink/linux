@@ -1,0 +1,2 @@
+--https://blog.dbi-services.com/oracle-disables-your-multitenant-option-when-you-run-on-ec2/
+strace -k -e trace=recvfrom,sendto -yy -s 1000 -f -o trace.trc sqlplus / as sysdba <<<'startup force'
