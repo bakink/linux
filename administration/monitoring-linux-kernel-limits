@@ -1,0 +1,3 @@
+--https://mahmoudhatem.wordpress.com/2020/04/22/monitoring-linux-kernel-limits-for-oracle-database/
+--https://access.redhat.com/documentation/en-us/reference_architectures/2017/html-single/deploying_oracle_rac_database_12c_release_2_on_red_hat_enterprise_linux_7/index
+--What value should kernel parameter AIO-MAX-NR be set to ? (Doc ID 2229798.1)
