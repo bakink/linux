@@ -18,4 +18,5 @@ user.oracle:100:Oracle:::process.max-file-descriptor=(basic,65536,deny);process.
 adrasan:
 user.oracle:100:Oracle:::process.max-sem-nsems=(priv,256,deny);project.max-sem-ids=(privileged,1024,deny);process.max-file-descriptor=(basic,65536,deny);project.max-shm-ids=(privileged,512,deny);project.max-shm-memory=(privileged,536870912000,deny)
 
-Selçuk Karaman
+
+Levent Yavuz <levent.yavuz@oracle.com>; Yuksel Saygin <yuksel.saygin@oracle.com>; 
