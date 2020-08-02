@@ -1,0 +1,2 @@
+--Solaris
+iostat -xpnCXMmze 2|grep c0$ 
