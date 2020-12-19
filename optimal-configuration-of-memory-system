@@ -1,0 +1,73 @@
+--https://support.huawei.com/enterprise/en/doc/EDOC1000117211/1395f4a4/optimal-configuration-of-memory-system
+
+
+Optimal Configuration of Memory System
+Automatic NUMA Balancing
+Automatic NUMA balancing is a new feature introduced from Linux 3.8 Kernel. It can automatically optimize the application running in the NUMA system. It is enabled in the RHEL 7 system by default.
+
+For applications such as Oracle, NUMA optimization has been performed. It is advised not to enable this function, which is called by the applications based on optimal mode. Fort some scenarios requiring manual optimization by numactl, it is also advised not to enable this function.
+
+Disabling method:
+
+echo 0 > /proc/sys/kernel/numa_balancing
+or
+
+sysctl -w kernel.numa_balancing=0
+It is valid permanently and written into the sysctl.conf file. It is validated using sysctl –p.
+
+Transparent Huge Pages (THP)
+Huge Pages means that the system manages the memory using memory pages over 4 KB. The increase to memory pages is conducive to the management of large memories by the system and the improvement of memory access efficiency. Huge pages are memory pages of 2 MB and 1 GB, where the 1 GB memory page is the optimal choice for managing memory capacity of TB level.
+
+THP means the use of Huge Pages by default during memory allocation by the Linux Kernel. When the allocation by Huge Pages fails, 4 KB pages will be used. THP is enabled by default in RHEL 6 and 7.
+
+Oracle cannot perform inter-process communications by means of THP. If THP is enabled, some Oracle performance problems and access delay may occur. For Oracle, accordingly, it is advised to disable THP. If Huge Pages must be used, it can be set manually and provided for Oracle.
+
+Method for disabling THP: Temporary system shutdown:
+
+echo never > /sys/kernel/mm/redhat_transparent_hugepage/enabled
+echo never > /sys/kernel/mm/redhat_transparent_hugepage/defrag
+Complete shutdown, valid upon restart.
+
+For RHEL 6, add the statement transparent_hugepage=never when enabling the menu option /etc/grub.conf kernel.
+
+For RHEL 7, add transparent_hugepage=never after vconsole.keymap= in /etc/default/grub, and run grub2-mkconfig -o /boot/grub2/grub.cfg to validate the configuration.
+
+Huge Pages
+Huge Pages is the feature provided later than the Linux 2.6 Kernel. Pages over 4 KB are used to improve the access efficiency of large memories. It is advised to use Huge Pages for servers with large memories, for example the RH8100 V3. Currently prevalent databases all support Huge Pages. Using Oracle as an example, the dimension of Hugepage can be set slightly greater than that of SGA. For detailed steps, see the following document:
+
+Configuring HugePages for Oracle on Linux (x86-64)
+
+ NOTE:
+For Automatic Memory Management (AMM) features using Oracle 11g or above, Huge pages cannot be used. However, it can be used for Automatic Shared Memory Management (ASMM) features.
+
+Memory Kernel Parameters
+Edit the /etc/sysctl.conf file and add the following parameters:
+
+vm.swappiness = 1
+vm.dirty_background_ratio = 3
+vm.dirty_ratio = 80
+vm.dirty_expire_centisecs = 500
+vm.dirty_writeback_centisecs = 100
+These parameters are mainly used to adjust the allocation and release of virtual memory in the system, improving the memory processing efficiency.
+
+For the Oracle system, see the following configuration option. Set the parameters based on the service system and database files.
+
+vm.swappiness = 0
+vm.dirty_background_ratio = 3
+vm.dirty_ratio = 80
+vm.dirty_expire_centisecs = 500
+vm.dirty_writeback_centisecs = 100
+kernel.shmmax = 68719476736
+kernel.shmall = 4294967296
+kernel.shmmni = 4096
+kernel.sem = 250 32000 100 128
+# fs.file-max needs to be set if not using Oracle ASMLib.
+# If using Oracle ASMLib, comment out fs.file-max fs.file-max = 6815744
+fs.aio-max-nr = 1048576
+net.ipv4.ip_local_port_range = 9000 65500
+net.core.rmem_default = 262144
+net.core.rmem_max = 4194304
+net.core.wmem_default = 262144
+net.core.wmem_max = 1048576
+Validate the parameters with sysctl -p.
+
