@@ -1,2 +1,6 @@
 --Solaris
 iostat -xpnCXMmze 2|grep c0$ 
+
+ prctl -n project.max-shm-memory -i project user.oracle
+ prctl -n project.max-shm-memory -r -v 350GB -i project user.oracle
+ projmod -K project.max-shm-memory="(priv,375809638400,deny)" user.oracle
