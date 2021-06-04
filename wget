@@ -1,0 +1,1 @@
+wget --http-user=USER --http-password=PASS --no-check-certificate --output-document=p30133506_112040_Linux-x86-64.zip "https://updates.oracle.com/Orion/Download/download_patch/p30133506_112040_Linux-x86-64.zip"
