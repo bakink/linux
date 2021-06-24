@@ -2,3 +2,5 @@
 --https://twitter.com/climagic/status/993960689000747008
 
 curl -v telnet://host.example.com:1093
+curl -s -v -k google.com
+curl -V -i google.com
