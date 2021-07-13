@@ -6,3 +6,5 @@ Join Zoom Meeting
 https://couchbase.zoom.us/j/4853875187
 
 Meeting ID: 485 387 5187
+
+alter session set NLS_TIMESTAMP_TZ_FORMAT ='YYYY-MM-DD HH:MI:SS.FF'
